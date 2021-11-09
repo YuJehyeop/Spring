@@ -20,13 +20,14 @@ public class Lecture extends Timestamped{
     @Column(nullable = false)
     private String tutor;
 
-    public Lecture(String title, String tutor) {
-        this.title = title;
-        this.tutor = tutor;
-    }
-
     public void update(LectureRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.tutor = requestDto.getTutor();
     }
+
+    public Lecture(LectureRequestDto requestDto) {
+        this.title = requestDto.getTitle();
+        this.tutor = requestDto.getTutor();
+    }
+
 }
