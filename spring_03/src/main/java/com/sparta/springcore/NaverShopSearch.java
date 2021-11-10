@@ -6,7 +6,7 @@ import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 @Comoonet
-@PropertySource("classpath:config.properties")
+//@PropertySource("classpath:config.properties")
 
 public class NaverShopSearch {
 

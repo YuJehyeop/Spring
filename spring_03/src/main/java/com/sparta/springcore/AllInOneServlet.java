@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sparta.springcore.dto.ProductMypriceRequestDto;
 import com.sparta.springcore.dto.ProductRequestDto;
+import com.sparta.springcore.model.Product;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
