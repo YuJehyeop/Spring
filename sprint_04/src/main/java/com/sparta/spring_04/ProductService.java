@@ -1,37 +1,45 @@
 package com.sparta.spring_04;
 
-import java.sql.SQLException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.List;
 
+@Service
 public class ProductService {
     // 멤버 변수 선언
     private final ProductRepository productRepository;
 
     // 생성자: ProductService() 가 생성될 때 호출됨
-    public ProductService() {
+    @Autowired
+    public ProductService(ProductRepository productRepository) {
         // 멤버 변수 생성
-        this.productRepository = new ProductRepository();
+        this.productRepository = productRepository;
     }
 
-    public List<Product> getProducts() throws SQLException {
+    public List<Product> getProducts() {
         // 멤버 변수 사용
-        return productRepository.getProducts();
+        return productRepository.findAll();
     }
 
-    public Product createProduct(ProductRequestDto requestDto) throws SQLException {
+    @Transactional // 메소드 동작이 SQL 쿼리문임을 선언합니다.
+    public Product createProduct(ProductRequestDto requestDto) {
         // 요청받은 DTO 로 DB에 저장할 객체 만들기
         Product product = new Product(requestDto);
-        productRepository.createProduct(product);
+        productRepository.save(product);
         return product;
     }
 
-    public Product updateProduct(Long id, ProductMypriceRequestDto requestDto) throws SQLException {
-        Product product = productRepository.getProduct(id);
-        if (product == null) {
-            throw new NullPointerException("해당 아이디가 존재하지 않습니다.");
-        }
+    @Transactional // 메소드 동작이 SQL 쿼리문임을 선언합니다.
+    public Product updateProduct(Long id, ProductMypriceRequestDto requestDto) {
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new NullPointerException("해당 아이디가 존재하지 않습니다.")
+        );
+
         int myPrice = requestDto.getMyprice();
-        productRepository.updateProductMyPrice(id, myPrice);
+
+        product.updateMyPrice(myPrice);
         return product;
     }
 }

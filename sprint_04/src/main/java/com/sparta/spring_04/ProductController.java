@@ -10,9 +10,9 @@ public class ProductController {
     // 멤버 변수 선언
     private final ProductService productService;
 
-    public ProductController() {
+    public ProductController(ProductService productService) {
         // 멤버 변수 생성
-        productService = new ProductService();
+        this.productService = productService;
     }
 
     // 등록된 전체 상품 목록 조회
